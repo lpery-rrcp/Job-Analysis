@@ -41,6 +41,10 @@ def delete_job(id: int):
     return f"Removed Job {id}"
 
 
+def clear_job():
+    pass
+
+
 def edit_job():
     """
     Edit different variables to the job application.
@@ -48,6 +52,11 @@ def edit_job():
             - Company
             - Date Applied
     """
+    con = sqlite3.connect("JobApplicationData.db")
+    cur = con.cursor()
+
+    con.commit()
+    con.close()
     return "Job edited"
 
 
@@ -67,7 +76,8 @@ while True:
     print("2. Delete Job Application")
     print("3. Edit Job Application")
     print("4. Show database")
-    print("5. Exit")
+    print("5. Clear Database")
+    print("6. Exit")
     userInput = int(input("Enter number: "))
 
     if userInput == 1:
@@ -78,6 +88,8 @@ while True:
         print(edit_job())
     elif userInput == 4:
         print(show_database())
+    elif userInput == 5:
+        print(clear_job())
     elif userInput == 5:
         print("Thanks for using Job Analytics.❤️")
         break
