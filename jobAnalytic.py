@@ -28,9 +28,17 @@ def add_job(title, company, date):
     return f"Job Added: {title} | ID: {new_id}"
 
 
-def delete_job():
-    """Deletes the entire job application"""
-    return "Removed Job"
+def delete_job(id: int):
+    """Deletes the entire job application (not the table)"""
+    con = sqlite3.connect("JobApplicationData.db")
+    cur = con.cursor()
+
+    # Deletes data
+    cur.execute("""DELETE FROM jobapplications WHERE id = ?""", (id,))
+
+    con.commit()
+    con.close()
+    return f"Removed Job {id}"
 
 
 def edit_job():
@@ -54,22 +62,24 @@ def show_database():
     return rows
 
 
-print("1. Add Job Application.")
-print("2. Delete Job Application")
-print("3. Edit Job Application")
-print("4. Show database")
-print("5. Exit")
-userInput = int(input("Enter number: "))
+while True:
+    print("1. Add Job Application.")
+    print("2. Delete Job Application")
+    print("3. Edit Job Application")
+    print("4. Show database")
+    print("5. Exit")
+    userInput = int(input("Enter number: "))
 
-if userInput == 1:
-    print(add_job("Cain", "CnA", "2017-05-20"))
-elif userInput == 2:
-    print(delete_job())
-elif userInput == 3:
-    print(edit_job())
-elif userInput == 4:
-    print(show_database())
-elif userInput == 5:
-    print("Thanks for using Job Analytics.❤️")
-else:
-    print("Invalid entry!! Please use numbers.")
+    if userInput == 1:
+        print(add_job("Cain", "CnA", "2017-05-20"))
+    elif userInput == 2:
+        print(delete_job(1))
+    elif userInput == 3:
+        print(edit_job())
+    elif userInput == 4:
+        print(show_database())
+    elif userInput == 5:
+        print("Thanks for using Job Analytics.❤️")
+        break
+    else:
+        print("Invalid entry!! Please use numbers.")
