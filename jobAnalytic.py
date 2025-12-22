@@ -45,7 +45,7 @@ def clear_job():
     pass
 
 
-def edit_job():
+def edit_job(id, title=None, company=None, date=None):
     """
     Edit different variables to the job application.
             - Job Title
@@ -54,6 +54,33 @@ def edit_job():
     """
     con = sqlite3.connect("JobApplicationData.db")
     cur = con.cursor()
+
+    field = []
+    value = []
+
+    # checks if there are changes.
+    if title is not None:
+        field.append("title = ?")
+        value.append(title)
+
+    if company is not None:
+        field.append("company = ?")
+        value.append(company)
+
+    if date is not None:
+        field.append("date_applied = ?")
+        value.append(date)
+
+    # No edits
+    if not field:
+        con.close()
+        return "No changes provided"
+
+    value.append(id)
+
+    # executes the changes.
+    cur.execute(
+        f"""UPDATE jobapplications SET {", ".join(field)} WHERE id = ?""", value)
 
     con.commit()
     con.close()
@@ -85,12 +112,12 @@ while True:
     elif userInput == 2:
         print(delete_job(1))
     elif userInput == 3:
-        print(edit_job())
+        print(edit_job(3))
     elif userInput == 4:
         print(show_database())
     elif userInput == 5:
         print(clear_job())
-    elif userInput == 5:
+    elif userInput == 6:
         print("Thanks for using Job Analytics.❤️")
         break
     else:
