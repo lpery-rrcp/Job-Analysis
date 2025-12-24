@@ -11,7 +11,7 @@ An app that cna scans inputed information to see analytics of various varibales.
   - bar charts
   - line graphs
 - Can edit the existing data
-- column that says whether you are waiting, got ghosted, rejected, in progress, success
+- column that says whether you are waiting, got ghosted, rejected, success
 
 Features
 
@@ -22,4 +22,3 @@ Features
   - amount of application (yearly, monthly, weekly, all time)
   - percentage rejected
   - got interviews
-"# Job-Analysis" 

@@ -42,7 +42,18 @@ def delete_job(id: int):
 
 
 def clear_job():
-    pass
+    con = sqlite3.connect("JobApplicationData.db")
+    cur = con.cursor()
+
+    try:
+        cur.execute("DELETE FROM jobapplications")
+        con.commit()
+        print("Deleted jobapplications table.")
+    except sqlite3.Error as error:
+        print(f"Failed to clear table")
+    finally:
+        cur.close()
+        con.close()
 
 
 def edit_job(id, title=None, company=None, date=None):
@@ -112,7 +123,7 @@ while True:
     elif userInput == 2:
         print(delete_job(1))
     elif userInput == 3:
-        print(edit_job(3))
+        print(edit_job(2, title="Hello"))
     elif userInput == 4:
         print(show_database())
     elif userInput == 5:
